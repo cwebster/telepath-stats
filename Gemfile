@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.9'
 gem 'rake', '0.9.2'
-# gem 'peterpunk-mhash'
 gem 'json'
 gem 'googlecharts'
 gem 'gchartrb'
