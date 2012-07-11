@@ -1,0 +1,154 @@
+<% content_for :head do %>
+	<title>Telepath Statistics</title>
+	<script language="javascript" type="text/javascript" >
+		function jumpto(x){	
+			if (document.form1.jumpmenu.value != "null") {
+				document.location.href = x
+			}
+			if (document.form2.jumpmenu.value != "null") {
+				document.location.href = x
+			}
+		}
+</script>
+
+<script type="text/javascript">
+	window.onload = function(){
+		new JsDatePick({
+			useMode:2,
+			target:"inputField",
+			dateFormat:"%d-%M-%Y"
+		});
+	};
+</script>
+<% end %>
+
+
+<div class="container">
+<div class="sixteen columns">
+	<div class="eight columns alpha">
+	<h3>General Statistics</h3>
+	<p><a href="http://labmed:3000/statistics">Live View of Outstanding Sets and Time Delay</a></p>
+	</div>
+	<div class="eight columns omega">
+	<h3>Per Set Statistics (Last 3 Months)</h3>
+	<p>/statistic/:set_code
+			<form name="form1">
+				<select name="jumpmenu" onChange="jumpto(document.form1.jumpmenu.options[document.form1.jumpmenu.options.selectedIndex].value)">
+				<% @sets.each do |sets| %>
+					<option value="/statistic/<%=sets.Set_Code%>"><%=sets.Set_Exp%></option>
+				<% end %>
+				</select>
+			</form>
+			</br> View samples outstanding and number of hours booked into system.
+	</p>
+	<p>/paststats/:set_code/:month/:year</p>
+			<form name="paststats" method="post" action="/paststats/">
+				<select name="set_code">
+					<% @sets.each do |sets| %>
+						<option 				value="<%=sets.Set_Code%>"><%=sets.Set_Exp%></option>
+					<% end %>
+				</select>
+				<select name="month" size="1" id="month">
+    										<option value="01">Jan</option>
+    										<option value="02">Feb</option>
+    										<option value="03">Mar</option>
+   											<option value="04">Apr</option>
+    										<option value="05">May</option>
+   											<option value="06">Jun</option>
+    										<option value="07">Jul</option>
+    										<option value="08">Aug</option>
+    										<option value="09">Sep</option>
+    										<option value="10">Oct</option>
+    										<option value="11">Nov</option>
+    										<option value="12">Dec</option>
+  					</select>
+					<select name="year">
+											<option value="2013>">2013</option>
+											<option value="2012>">2012</option>
+											<option value="2011>">2011</option>
+											<option value="2010>">2010</option>
+					</select>
+									<input type="submit" name="sudmit" id="sudmit" value="Submit" />
+				</form>
+			
+			</br> reported samples, TAT per sample and avg TAT for sample group, could be used for exception reporting for example
+	</p>
+	
+	</div>
+</div>
+</div>
+
+<div class="container">
+<div class="sixteen columns">
+	<div class="eight columns alpha">
+	
+	<p>/tatbyday/:set_code/:month/:year</p>
+	</br> View AVG tat per day and numbers of samples for set code in last 3 months
+	
+		<form name="tatbyday" method="post" action="/tatbyday/">
+									<select name="set_code">
+									<% @sets.each do |sets| %>
+										<option 				value="<%=sets.Set_Code%>"><%=sets.Set_Exp%></option>
+										<% end %>
+									</select>
+									<select name="month" size="1" id="month">
+    										<option value="01">Jan</option>
+    										<option value="02">Feb</option>
+    										<option value="03">Mar</option>
+   											<option value="04">Apr</option>
+    										<option value="05">May</option>
+   											<option value="06">Jun</option>
+    										<option value="07">Jul</option>
+    										<option value="08">Aug</option>
+    										<option value="09">Sep</option>
+    										<option value="10">Oct</option>
+    										<option value="11">Nov</option>
+    										<option value="12">Dec</option>
+  									</select>
+									<select name="year">
+										<option value="2013>">2013</option>
+										<option value="2012>">2012</option>
+										<option value="2011>">2011</option>
+										<option value="2010>">2010</option>
+									</select>
+									<input type="submit" name="sudmit" id="sudmit" value="Submit" />
+						</form>
+
+	</div>
+	<div class="eight columns omega">
+<h3>Per Set Statistics (>Last 3 Months)</h3>
+		<p>/historical/:set_code/:month/:year</p>
+		</br> > 3 months old data
+		<p>
+			<form name="historial" method="post" action="/historical/">
+									<select name="set_code">
+									<% @sets.each do |sets| %>
+										<option 				value="<%=sets.Set_Code%>"><%=sets.Set_Exp%></option>
+										<% end %>
+									</select>
+									<select name="month" size="1" id="month">
+    										<option value="01">Jan</option>
+    										<option value="02">Feb</option>
+    										<option value="03">Mar</option>
+   											<option value="04">Apr</option>
+    										<option value="05">May</option>
+   											<option value="06">Jun</option>
+    										<option value="07">Jul</option>
+    										<option value="08">Aug</option>
+    										<option value="09">Sep</option>
+    										<option value="10">Oct</option>
+    										<option value="11">Nov</option>
+    										<option value="12">Dec</option>
+  									</select>
+									<select name="year">
+										<option value="2013>">2013</option>
+										<option value="2012>">2012</option>
+										<option value="2011>">2011</option>
+										<option value="2010>">2010</option>
+									</select>
+									<input type="submit" name="sudmit" id="sudmit" value="Submit" />
+				</form>
+		</p>
+	</div>
+</div>
+</div>

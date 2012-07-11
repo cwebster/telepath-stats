@@ -1,0 +1,11 @@
+{
+    "aaData": [
+    <% @outstanding.each do |outstanding| %>
+        [
+            "Specimen": "<%= outstanding.Specimen_Number %>",
+            "Consultant": "<%= outstanding.Consultant %>",
+            "Consultant2": "<%= outstanding.Consultant %>",
+        ],
+	<% end %>
+	]
+}

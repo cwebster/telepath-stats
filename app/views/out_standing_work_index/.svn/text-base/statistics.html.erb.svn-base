@@ -1,0 +1,141 @@
+<% content_for :head do %>
+
+<title>Oustanding Work</title>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['controls']});
+	
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawDashboard);
+
+      // Callback that creates and populates a data table, 
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      
+      function drawDashboard() {
+      
+      // Prepare the data
+  			var data = google.visualization.arrayToDataTable([
+  				['Number Outstanding', 'Set Code', 'Delay', 'Discipline'],
+   				<% @statistics.each do |statistic| %>
+					<%if !statistic.delay.nil? %>
+          				[<%= statistic.Number_Outstanding %>, '<%= statistic.Set_Code %>', <%= statistic.delay %>,'<%= statistic.Discipline %>'],
+        			<% end %> 
+         		<% end %>
+        		]);﻿ 
+  
+    // Create a dashboard
+		var dashboard = new google.visualization.Dashboard(
+          document.getElementById('dashboard_div'));
+
+
+// Create a pie chart, passing some options
+        
+          var pieChart = new google.visualization.ChartWrapper({
+    'chartType': 'PieChart',
+    'containerId': 'chart_div',
+    'options': {
+      'width': 250,
+      'height': 300,
+      'title': 'Number of Samples Oustanding'
+    },
+    // The pie chart will use the columns 'Name' and 'Donuts eaten'
+    // out of all the available ones.
+    'view': {'columns': [1, 0]}
+  });
+
+ // Create a range slider, passing some options
+        var donutRangeSlider = new google.visualization.ControlWrapper({
+          'controlType': 'NumberRangeFilter',
+          'containerId': 'filter_div',
+          'options': {
+            'filterColumnLabel': 'Number Outstanding'
+          }
+        });
+
+ // Create and draw the visualization.
+ 
+ var bars = new google.visualization.ChartWrapper({
+    		'chartType': 'BarChart',
+    		'containerId': 'visualization',
+    		'options': {
+      		'width': 300,
+            'height': 500,
+            'title': 'Outstanding',
+            showScale: true
+    		},
+    		'view': {'columns': [1, 0]}
+
+  		});
+
+// Create results table
+ 		var table = new google.visualization.ChartWrapper({
+    		'chartType': 'Table',
+    		'containerId': 'table_div',
+    		'options': {
+      		'width': '300px'
+    		},
+    		'view': {'columns': [1, 0,2]}
+    	});
+
+  // Define a category picker control for the Gender column
+  var categoryPicker = new google.visualization.ControlWrapper({
+    'controlType': 'CategoryFilter',
+    'containerId': 'control2',
+    'options': {
+      'filterColumnLabel': 'Discipline',
+      'ui': {
+      'labelStacking': 'vertical',
+        'allowTyping': false,
+        'allowMultiple': false
+      }
+    }
+  });
+ 
+
+// Draw the dashboard.
+		dashboard.bind([donutRangeSlider, categoryPicker], [pieChart, table,bars])
+		dashboard.bind(donutRangeSlider, table);
+		dashboard.bind(donutRangeSlider, bars);
+		dashboard.bind(donutRangeSlider, pieChart);
+        dashboard.draw(data);
+}
+
+
+
+    </script>
+<% end %>
+
+<!-- 960 Container -->
+	<div class="container">
+<div id="dashboard_div">
+		<!-- Main Layout -->	
+			<div class="one-third column">
+			<h3>Listing Oustanding Work</h3>
+			<p></p>
+			<h4>Median Delay: <%= @median %></h4>
+			<h4>Average Delay: <%= @mean %></h4>
+			<h4>Number Outstanding: <%= @outstanding %></h4>
+			<div id="table_div"></div>
+			</div>
+			<div class="one-third column">
+			<h3>% Oustanding Samples</h3><p></p>
+			<div id="filter_div"></div>
+			<p><div id="chart_div"></div></p>
+			</div>
+			<div class="one-third column">
+			<h3>Outstanding Samples</h3><p></p>
+			<div id="control2"></div>
+			<p><div id="visualization"></div></p>
+			</div>	
+		<!-- /Main Layout -->
+	</div>
+</div>
+	<!-- /End 960 Container -->
+
+
+
+
+

@@ -1,0 +1,63 @@
+<% content_for :head do %>
+
+<title>Turnaround Time</title>    
+    <script type="text/javascript">
+      	google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+      
+    function drawChart() {
+      
+      // Prepare the data
+        var data = new google.visualization.DataTable();
+       	data.addColumn('string', 'Date Authorised');
+        data.addColumn('number', 'Avg TAT');
+        data.addRows(<%= @count %>);
+        		<% count=0%>
+   				<% @statistics.each do |statistic| %>
+					<%if !statistic.HrsIn.nil? %>
+						data.setValue(<%=count%>, 0, '<%= statistic.Date_Booked_In %>');
+          				data.setValue(<%=count%>, 1, <%= statistic.HrsIn %>);
+          			<% count = count +1 %>
+          			<% end %> 
+         		<% end %>		
+	 
+	 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, {width: 400, height: 240, title: '<%=@setcode%> Daily Performance'});
+         		
+        var data1 = new google.visualization.DataTable();
+       	data1.addColumn('string', 'Date_Authorised');
+        data1.addColumn('number', 'Numbers');
+        data1.addRows(<%= @count %>);
+        		<% count=0%>
+   				<% @statistics.each do |statistic| %>
+					<%if !statistic.HrsIn.nil? %>
+						data1.setValue(<%=count%>, 0, '<%= statistic.Date_Booked_In %>');
+          				data1.setValue(<%=count%>, 1, <%= statistic.numbers %>);
+          			<% count = count +1 %>
+          			<% end %> 
+         		<% end %>	
+    
+     	 var chart1 = new google.visualization.LineChart(document.getElementById('chart2_div'));
+        chart1.draw(data1, {width: 400, height: 240, title: '<%=@setcode%> Daily Performance'});    
+    
+      }
+
+    </script>
+<% end %>
+
+<div class="container">
+<div class="sixteen columns">
+	<div class="eight columns alpha">
+			<h3>Daily (Date Booked in) TAT and Numbers for: <%= @setcode %></h3>
+      <div id="chart_div"></div>
+      <div id="chart2_div"></div>
+	</div>
+	<div class="eight columns omega">
+<h3>Median TAT over time period: <%=@median%></h3>
+<h3>Avg TAT over time period: <%=@mean%></h3>
+<h3>Number of Samples: <%=@counts%></h3>
+<p>TAT is calculated for each sample grouped by the date booked in and the average calculated as is the number of samples.</p>
+<p></p>
+	</div>
+</div>
+</div>

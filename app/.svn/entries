@@ -1,0 +1,43 @@
+10
+
+dir
+94
+svn+ssh://cwebster@i-qc.me/home/cwebster/svn/telepath/railsapp/app
+svn+ssh://cwebster@i-qc.me/home/cwebster/svn/telepath
+
+
+
+2012-02-15T23:59:26.561658Z
+94
+cwebster
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7d2c4175-7a76-4e77-8910-7a71d812b230
+
+helpers
+dir
+
+models
+dir
+
+controllers
+dir
+
+mailers
+dir
+
+views
+dir
+

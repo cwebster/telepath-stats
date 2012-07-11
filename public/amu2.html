@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>amu2</title>
+	<meta name="generator" content="BBEdit 10.1" />
+	
+	<script type="text/javascript" language="javascript" src="javascripts/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src="javascripts/jquery.dataTables.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+	
+	fnServerObjectToArray = function ( aElements )
+{
+    return function ( sSource, aoData, fnCallback ) {
+        $.ajax( {
+            "dataType": 'json', 
+            "type": "POST", 
+            "url": sSource, 
+            "data": aoData, 
+            "success": function (json) {
+                var a = [];
+                for ( var i=0, iLen=json.aaData.length ; i<iLen ; i++ ) {
+                    var inner = [];
+                    for ( var j=0, jLen=aElements.length ; j<jLen ; j++ ) {
+                        inner.push( json.aaData[i][aElements[j]] );
+                    }
+                    a.push( inner );
+                }
+                json.aaData = a;
+                fnCallback(json);
+            }
+        } );
+    }
+}
+	
+	
+		$(document).ready(function() {
+    	var oTable = $('#example').dataTable( {
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "http://labmed:3000/amu.json",
+        "fnServerData": fnServerObjectToArray([function ( sSource, aoData, fnCallback )] ){
+            $.ajax( {
+                "dataType": 'jsonp', 
+                "type": "GET", 
+                "url": sSource, 
+                "data": aoData, 
+                "success": fnCallback
+            } );
+        }
+        
+    } );
+};
+	
+</script>		
+	
+</head>
+<body>
+
+</body>
+</html>

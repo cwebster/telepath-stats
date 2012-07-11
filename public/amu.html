@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Outstanding Work AMU</title>
+	<meta name="generator" content="BBEdit 10.1" />
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="stylesheets/jquery-ui-1.8.16.custom.css" />
+		
+		<link rel="stylesheet" type="text/css" href="stylesheets/screen.css" />
+		<link rel="stylesheet" type="text/css" href="stylesheets/scaffold.css" />
+
+		<script type="text/javascript" language="javascript" src="javascripts/jquery.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="javascripts/jquery-ui-1.8.16.custom.min.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="javascripts/jquery.dataTables.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="javascripts/datatables.ajaxredraw.js"></script>
+		
+		<script type="text/javascript">
+			function load()
+				{
+					updateTable();
+				}
+			</script>
+		
+		
+
+		<script type="text/javascript" charset="utf-8">
+		
+		
+		
+		
+function updateTable()
+{		
+		
+		var oTable;
+		$(document).ready(function() {
+    	oTable = $('#example').dataTable( {
+        "bProcessing": true,
+        "bRetrieve" : true,
+        "aaSorting": [[ 9, "desc" ]],
+        "aoColumnDefs": [ 
+                        { "bSearchable": false, "bVisible": false, "aTargets": [ 8 ] },
+                        { "bVisible": false, "aTargets": [ 3 ] },
+                        { "bVisible": false, "aTargets": [ 1 ] },
+                        { "bVisible": false, "aTargets": [ 6 ] }
+                    ],
+        "bPaginate": false,
+        "bJQueryUI": true,
+        "sAjaxSource": "/statistics/json.php"
+    } );
+} );
+	oTable.fnReloadAjax(oTable.fnSettings());
+	setTimeout("updateTable();", 50000);
+}
+		
+		</script>
+	</head>
+	
+<body onload="updateTable();">
+
+<div id="dynamic">
+
+<div class="tables_header">
+<h1>Current outstanding specimens for Heartlands AMU</h1>
+Click on column headings to sort data. You can search for PID or filter for department by typing in the search box. For example chem selects all the current chemistry tests outstanding.
+
+<ul>
+
+	<li>CHEM - Chemistry</li>
+	<li>HAE - Haematology</li>
+	<li>BBS - Blood Bank</li>
+	<li>Imm - Immunology</li>
+
+</ul>
+
+<hr />			
+</div>
+<table cellpadding="0" cellspacing="0" border="0" width="75%" class="display" id="example">
+	<thead>
+		<tr>
+			<th>Specimen Number</th>
+			<th>Lab Code</th>
+			<th>Consultant</th>
+			<th>Location</th>
+			<th>Registration Number</th>
+			<th>Set Expansion</th>
+			<th>Status</th>
+			<th>Date Time Received</th>
+			<th>UI</th>
+			<th>Mins In the Laboratory</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Specimen Number</th>
+			<th>Lab Code</th>
+			<th>Consultant</th>
+			<th>Location</th>
+			<th>Registration Number</th>
+			<th>Set Expansion</th>
+			<th>Status</th>
+			<th>Date Time Received</th>
+			<th>UI</th>
+			<th>Mins In the Laboratory</th>
+		</tr>
+	</tfoot>
+</table>
+			</div>
+
+</body>
+</html>

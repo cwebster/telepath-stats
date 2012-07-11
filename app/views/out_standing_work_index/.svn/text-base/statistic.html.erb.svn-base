@@ -1,0 +1,129 @@
+<% content_for :head do %>
+
+<title>Oustanding Work</title>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['controls']});
+      google.load('visualization', '1', {packages:['gauge']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawDashboard);
+
+      // Callback that creates and populates a data table, 
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      
+      function drawDashboard() {
+      
+      // Prepare the data
+  			var data = google.visualization.arrayToDataTable([
+  				['Specimen Number', 'Hours Delay'],
+   				<% @statistic.each do |statistic| %>
+					<%if !statistic.HrsIn.nil? %>
+          				['<%= statistic.Specimen_Number %>', <%= statistic.HrsIn %>],
+        			<% end %> 
+         		<% end %>
+        		]);﻿ 
+  
+    // Create a dashboard
+		var dashboard = new google.visualization.Dashboard(
+          document.getElementById('dashboard_div'));
+
+
+// Create a pie chart, passing some options
+        var pieChart = new google.visualization.ChartWrapper({
+          'chartType': 'BarChart',
+          'containerId': 'chart_div',
+          'options': {
+            'width': 500,
+            'height': 300,
+            'pieSliceText': 'value',
+            'legend': 'right'
+          }
+        });
+
+ // Create a range slider, passing some options
+        var donutRangeSlider = new google.visualization.ControlWrapper({
+          'controlType': 'NumberRangeFilter',
+          'containerId': 'filter_div',
+          'options': {
+            'filterColumnLabel': 'Hours Delay'
+          }
+        });
+
+// Create results table
+ 		var table = new google.visualization.ChartWrapper({
+    		'chartType': 'Table',
+    		'containerId': 'table_div',
+    		'options': {
+      		'width': '500px'
+    		}
+  		});
+
+  		
+
+// Draw the dashboard.
+		//bind([slider, categoryPicker], [pie, table])
+		dashboard.bind(donutRangeSlider, table);
+		dashboard.bind(donutRangeSlider, pieChart);
+        dashboard.draw(data);
+        drawChart();
+}
+
+function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Label');
+        data.addColumn('number', 'Value');
+        data.addRows(1);
+        data.setValue(0, 0, 'TAT');
+        data.setValue(0, 1, <%= @pcttat %>);
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart2_div'));
+        var options = {width: 400, height: 120, redFrom: 90, redTo: 100,
+            yellowFrom:75, yellowTo: 90, minorTicks: 5};
+        chart.draw(data, options);
+      }
+
+    </script>
+<% end %>
+
+<div class="container">
+
+		<!-- Main Layout -->	
+			<div class="one-third column">
+			<h3>Listing Oustanding Work For: <%= @setcode %></h3>
+			<p></p>
+			<h4>Median Delay: <%= @median %></h4>
+			<h4>Average Delay: <%= @mean %></h4>
+			<h4>Number Outstanding: <%= @outstanding %></h4>
+			</div>
+			<div class="one-third column">
+			<h3>% of TAT Average Waiting Time</h3>
+			<p><div id="chart2_div"></div></p>
+			</div>
+			<div class="one-third column">
+				<h4>Results Ready</h4>
+				<div id="resultsready"></div>
+			</div>	
+		<!-- /Main Layout -->
+	</div>
+	<!-- /End 960 Container -->
+</div>
+<div class="container">
+<div id="dashboard_div">
+<div class="sixteen columns">
+	<div class="eight columns alpha">
+		<h4>Filter Results</h4>
+		<div id="filter_div"></div>
+	</div>
+	<div class="eight columns omega">
+			<h3>Samples Oustanding</h3>
+			<div id="chart_div"></div>
+			<br />
+			<div id="table_div"></div>
+	</div>
+</div>
+</div>
+</div>
+
