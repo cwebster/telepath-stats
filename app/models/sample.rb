@@ -1,2 +1,2 @@
-class Sample < ActiveRecord::Base
+class Sample < CachedModel
 end

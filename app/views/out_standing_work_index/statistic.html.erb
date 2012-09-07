@@ -89,41 +89,72 @@ function drawChart() {
 <% end %>
 
 <div class="container">
-
+<%if @statistic.empty?%>
 		<!-- Main Layout -->	
 			<div class="one-third column">
-			<h3>Listing Oustanding Work For: <%= @setcode %></h3>
+			<h3>Listing Outstanding Work For: <%= @setcode %></h3>
 			<p></p>
-			<h4>Median Delay: <%= @median %></h4>
-			<h4>Average Delay: <%= @mean %></h4>
-			<h4>Number Outstanding: <%= @outstanding %></h4>
+			<h4>No Results returned</h4>
+			
 			</div>
 			<div class="one-third column">
-			<h3>% of TAT Average Waiting Time</h3>
-			<p><div id="chart2_div"></div></p>
 			</div>
 			<div class="one-third column">
-				<h4>Results Ready</h4>
-				<div id="resultsready"></div>
 			</div>	
 		<!-- /Main Layout -->
+			</div>
+			<!-- /End 960 Container -->
+		</div>
+		<div class="container">
+		<div id="dashboard_div">
+		<div class="sixteen columns">
+			<div class="eight columns alpha">
+				<div id="filter_div"></div>
+			</div>
+			<div class="eight columns omega">
+					<div id="chart_div"></div>
+					<div id="table_div"></div>
+			</div>
+		</div>
+		</div>
+		</div>
+<%else%>
+	<!-- Main Layout -->	
+	<div class="one-third column">
+	<h3>Listing Outstanding Work For: <%= @setcode %></h3>
+	<p></p>
+	<h4>Median Delay: <%= @median %></h4>
+	<h4>Average Delay: <%= @mean %></h4>
+	<h4>Number Outstanding: <%= @outstanding %></h4>
 	</div>
-	<!-- /End 960 Container -->
-</div>
-<div class="container">
-<div id="dashboard_div">
-<div class="sixteen columns">
-	<div class="eight columns alpha">
-		<h4>Filter Results</h4>
-		<div id="filter_div"></div>
+	<div class="one-third column">
+	<h3>% of TAT Average Waiting Time</h3>
+	<p><div id="chart2_div"></div></p>
 	</div>
-	<div class="eight columns omega">
-			<h3>Samples Oustanding</h3>
-			<div id="chart_div"></div>
-			<br />
-			<div id="table_div"></div>
+	<div class="one-third column">
+		<h4>Results Ready</h4>
+		<div id="resultsready"></div>
+	</div>	
+	<!-- /Main Layout -->
+		</div>
+		<!-- /End 960 Container -->
 	</div>
-</div>
-</div>
-</div>
+	<div class="container">
+	<div id="dashboard_div">
+	<div class="sixteen columns">
+		<div class="eight columns alpha">
+			<h4>Filter Results</h4>
+			<div id="filter_div"></div>
+		</div>
+		<div class="eight columns omega">
+				<h3>Samples Outstanding</h3>
+				<div id="chart_div"></div>
+				<br />
+				<div id="table_div"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+<%end%>
+
 

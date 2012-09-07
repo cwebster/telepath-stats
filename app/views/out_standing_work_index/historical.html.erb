@@ -23,16 +23,17 @@
        	data.addColumn('string', 'Date Authorised');
         data.addColumn('number', 'Avg TAT');
         data.addColumn('number', 'No of Samples');
-        data.addRows(<%= @counts %>);
-        		<% count=0%>
-   				<% @statistic.each do |statistic| %>
-					<%if !statistic.HrsIn.nil? %>
-						data.setValue(<%=count%>, 0, '<%= statistic.Date_Booked_In %>');
-          				data.setValue(<%=count%>, 1, <%= statistic.HrsIn %>);
-          				data.setValue(<%=count%>, 2, <%= statistic.numbers %>);
-          			<% count = count +1 %>
-          			<% end %> 
-         		<% end %>
+        data.addRows([
+			<% @statistic.each do |statistic| %>
+				['<%= statistic.Date_Time_Received %>',  {v: <% if statistic.HrsIn.nil? %> 0
+				<%else%> <%=statistic.HrsIn %>}, <% end %>
+				
+				{v: <% if statistic.HrsIn.nil? %> 0
+				<%else%> <%=statistic.HrsIn %>}, <% end %>],
+
+			<%end%>
+          		['Bob',   {v: 1},{v: 1}]
+        ]);
     
     
 	 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

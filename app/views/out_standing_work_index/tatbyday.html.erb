@@ -47,17 +47,34 @@
 
 <div class="container">
 <div class="sixteen columns">
-	<div class="eight columns alpha">
-			<h3>Daily (Date Booked in) TAT and Numbers for: <%= @setcode %></h3>
-      <div id="chart_div"></div>
-      <div id="chart2_div"></div>
-	</div>
-	<div class="eight columns omega">
-<h3>Median TAT over time period: <%=@median%></h3>
-<h3>Avg TAT over time period: <%=@mean%></h3>
-<h3>Number of Samples: <%=@counts%></h3>
-<p>TAT is calculated for each sample grouped by the date booked in and the average calculated as is the number of samples.</p>
-<p></p>
-	</div>
+	<%if @statistics.empty?%>
+		<!-- Start of Layout -->
+		<div class="eight columns alpha">
+				<h3>Daily (Date Booked in) TAT and Numbers for: <%= @setcode %></h3>
+	      <div id="chart_div"></div>
+	      <div id="chart2_div"></div>
+		</div>
+		<div class="eight columns omega">
+			<h3>No Results Returned</h3>
+			<p>Most likely problem is that set code is obsolete</p>
+		</div>
+		<!-- End of Layout -->
+	<%else%>
+		<!-- Start of Layout -->
+		<div class="eight columns alpha">
+				<h3>Daily (Date Booked in) TAT and Numbers for: <%= @setcode %></h3>
+	      <div id="chart_div"></div>
+	      <div id="chart2_div"></div>
+		</div>
+		<div class="eight columns omega">
+	<h3>Median TAT over time period: <%=@median%></h3>
+	<h3>Avg TAT over time period: <%=@mean%></h3>
+	<h3>Number of Samples: <%=@counts%></h3>
+	<p>TAT is calculated for each sample grouped by the date booked in and the average calculated as is the number of samples.</p>
+	<p></p>
+		</div>
+		<!-- End of Layout -->
+	<%end%>
+
 </div>
 </div>

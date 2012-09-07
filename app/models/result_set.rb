@@ -1,4 +1,5 @@
-class ResultSet < ActiveRecord::Base
+class ResultSet < CachedModel
   belongs_to :OutstandingWorkIndex
   belongs_to :request
+
 end

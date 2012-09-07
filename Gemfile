@@ -7,7 +7,8 @@ gem 'googlecharts'
 gem 'gchartrb'
 gem 'glassfish'
 gem 'ruby-debug'
-
+gem 'cached_model'
+gem 'jruby-openssl'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

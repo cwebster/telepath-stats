@@ -1,0 +1,20 @@
+# Set the log level to ALL.
+log :level => :all
+
+rack "/Volumes/RAID/Sites/Default/telepath/config.ru" do
+  # Set the host and / or port that this rack application will
+  # be available on. This defaults to "0.0.0.0:9090"
+  listen 3000
+
+  # Set the host names that this rack application wll be available
+  # on. This defaults to "*"
+  hosts "labmed"
+
+  # Set arbitrary ENV variables
+  env :RAILS_ENV => "development"
+
+  # Set the file that controls the redeploys. This is relative to
+  # the applications root (the directory that the rackup file lives
+  # in). Touch this file to redepoy the application.
+  watch "REVISION"
+end

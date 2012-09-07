@@ -88,34 +88,55 @@ function drawChart() {
 
 <div class="container">
 	<div id="dashboard_div">
-		<!-- Main Layout -->	
+		
+		<%if @statistic.empty?%>
+		<!-- Main Layout -->
 			<div class="one-third column">
 			<h3>Turnaround Time For: <%= @setcode %></h3>
 			<p></p>
-			<h4>Median TAT: <%= @median %></h4>
-			<h4>Average TAT: <%= @mean %></h4>
-			<h4>Completed Samples: <%= @completed %></h4>
+			<h4>No Records Returned</h4>
 			</div>
 			
 			<div class="one-third column">
-				<h3>% of TAT Average Waiting Time</h3>
-				<p><div id="chart2_div"></div></p>
+
 			</div>
 			
 			<div class="one-third column">
-				<h3>Performance</h3>
-				<p>Number of Samples > TAT Target</p>
-				<div class="left">
-				<h4>Filter Results</h4>
-				<div id="filter_div"></div>
-				</div>
-				<div class="right">
-					<h3>Samples Oustanding</h3>
-						<div id="chart_div"></div>
-					<br />
-					<div id="table_div"></div>
-				</div>
+			
 			</div>	
 		<!-- /Main Layout -->
+	
+		<%else%>
+
+			<!-- Main Layout -->
+				<div class="one-third column">
+				<h3>Turnaround Time For: <%= @setcode %></h3>
+				<p></p>
+				<h4>Median TAT: <%= @median %></h4>
+				<h4>Average TAT: <%= @mean %></h4>
+				<h4>Completed Samples: <%= @completed %></h4>
+				</div>
+
+				<div class="one-third column">
+					<h3>% of TAT Average Waiting Time</h3>
+					<p><div id="chart2_div"></div></p>
+				</div>
+
+				<div class="one-third column">
+					<h3>Performance</h3>
+					<p>Number of Samples > TAT Target</p>
+					<div class="left">
+					<h4>Filter Results</h4>
+					<div id="filter_div"></div>
+					</div>
+					<div class="right">
+						<h3>Samples Outstanding</h3>
+							<div id="chart_div"></div>
+						<br />
+						<div id="table_div"></div>
+					</div>
+				</div>	
+			<!-- /Main Layout -->
+		<%end%>
 	</div>
 </div>

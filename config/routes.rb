@@ -29,7 +29,8 @@ Sweetapp::Application.routes.draw do
   	match "/historical/:set_code/:month/:year" => "out_standing_work_index#historical"
   	match "/historical/" => "out_standing_work_index#historical"
   	match "/amu/" => "amu#outstanding"
-  	
+  	match "/patmeans/:start_date/:end_date/:set_code/" => "stats#patient_means"
+  	match "/tats/:week_no" => "tats#tatsperformance"
   	
      resources :out_standing_work_index do
       member do

@@ -1,0 +1,93 @@
+<% content_for :head do %>
+
+<title>Turnaround Time Performance for Week: <%=@week_no%></title>
+
+
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+	  google.load("visualization", "1", {packages:["corechart"]});
+
+      google.setOnLoadCallback(drawTable);
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Set Code');
+        data.addColumn('number', 'Average Turnaround Time for Week');
+		data.addColumn('number', 'Turnaround Time Target');
+        data.addColumn('boolean', 'In TAT');
+		<% 	@countnotat = 0
+			@counthittat = 0 
+			@counter = 0
+			@rowpos =[]
+		%>
+        data.addRows([
+			<% @week_tats.each do |statistic| %>
+				['<%= statistic.Set_Code %>',  {v: <% if statistic.BItoAuth.nil? %> 0,
+				<%else%> <%=statistic.BItoAuth %>, <% end %>
+				f: <% if statistic.BItoAuth.nil? %> 'No Target'} <%else%>
+				'<%=statistic.BItoAuth %> Mins'}<% end %> , 
+				
+				{v: <% if statistic.Turnaround_Time.nil? %> 0,
+				<%else%> <%=statistic.Turnaround_Time %>, <% end %>
+				f: <% if statistic.Turnaround_Time.nil? %> 'No Target'} <%else%>
+				'<%=statistic.Turnaround_Time %> Mins'}<% end %>,
+				<% if statistic.Turnaround_Time.to_f > statistic.BItoAuth.to_f %>
+					true 
+					<% @counthittat = @counthittat +1 
+					@rowpos[@counter] = @counter
+					
+					%>
+				<% else %>
+					<% @countnotat = @countnotat +1 %>
+					false
+				<% end %>],
+				<% @counter = @counter +1 %>
+			<%end%>
+          		['Bob',   {v: 7000,  f: '$7,000'},{v: 7000,  f: '$7,000'}, true]
+        ]);
+			<% @counter=0%>
+			<% @rowpos.each do |rowhit| %>
+			<%=@rowpos[@counter]%>
+			<% @counter=@counter +1 %>
+			<% end %>
+			
+			
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(data, {showRowNumber: true});
+		drawChart();
+      }
+
+	function drawChart() {
+	        var data = google.visualization.arrayToDataTable([
+	          ['In TAT Performance', 'Out of TAT Performance'],
+	          ['In',     <%= @counthittat %>],
+	          ['Out',    <%= @countnotat %>]
+	        ]);
+
+	        var options = {
+	          title: 'TAT Performance for Week: <%= @week_No %>'
+	        };
+
+	        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+	        chart.draw(data, options);
+	      }
+	
+    </script>
+
+
+<% end %>
+
+
+<div class="container">
+<div class="sixteen columns">
+	<div class="eight columns alpha">
+			<h3>Weekly Turnaround Time Performance For Week Number: <%= @week_no %></h3>
+			<div id="table_div"></div>
+	</div>
+	
+	<div class="eight columns omega">
+		<div id="chart_div"></div>
+	</div>
+</div>
+</div>
+</div>

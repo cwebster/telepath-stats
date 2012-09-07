@@ -1,0 +1,62 @@
+<% content_for :head do %>
+
+<title>Turnaround Time</title>
+
+    
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+     
+      	google.load("visualization", "1", {packages:["corechart"]});
+
+      // Callback that creates and populates a data table, 
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      
+		google.setOnLoadCallback(drawChart);
+
+      
+    function drawChart() {
+      
+      // Prepare the data
+        var data = new google.visualization.DataTable();
+       	data.addColumn('string', 'Date Authorised');
+        data.addColumn('number', 'Patient Mean');
+        data.addColumn('number', 'No of Samples');
+        data.addRows(<%= @patient_means.size %>);
+        		<% count=0%>
+   				<% @patient_means.each do |statistic| %>
+					<%if !statistic.PatMean.nil? %>
+						data.setValue(<%=count%>, 0, '<%= statistic.Date_Authorised %>');
+         				data.setValue(<%=count%>, 1, <%= statistic.PatMean %>);
+          				data.setValue(<%=count%>, 2, <%= statistic.numbers %>);
+          			<% count = count +1 %>
+          			<% end %> 
+         		<% end %>
+    
+    
+	 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, 
+        {width: 640, 
+        height: 360, 
+        title: '<%=@setcode%> Daily Performance',
+        vAxes: {0: {logScale: false},
+            1: {logScale: false, maxValue: 10}},
+        series:{
+       0:{targetAxisIndex:0},
+       1:{targetAxisIndex:1},
+       2:{targetAxisIndex:1}}}
+        );
+      }
+
+    </script>
+<% end %>
+
+
+<div class="container">
+<div class="sixteen columns">
+			<h3>Daily (Date Booked in) Patient Mean and Numbers for: <%= @setcode %></h3>
+      		<div id="chart_div"></div>
+</div>
+</div>
+</div>
