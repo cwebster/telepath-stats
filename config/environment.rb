@@ -4,8 +4,9 @@ require File.expand_path('../application', __FILE__)
 require "ruby-debug"  
 require 'cached_model'
 require 'MemCache'
+require 'java'
 
-$CLASSPATH << "/Applications/Cache/dev/java/lib/JDK15/CacheDB.jar"
+$CLASSPATH << "/Applications/Cache/dev/java/lib/JDK16/cachejdbc.jar"
 
 # Initialize the rails application
 Sweetapp::Application.initialize!
