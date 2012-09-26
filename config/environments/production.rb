@@ -5,7 +5,7 @@ Sweetapp::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
   
-  config.cache_store = :dalli_store
+  config.cache_store = :memory_store
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
@@ -34,7 +34,7 @@ Sweetapp::Application.configure do
   config.serve_static_assets = false
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  config.action_controller.asset_host = "http://labmed-mini"
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

@@ -31,6 +31,7 @@ Sweetapp::Application.routes.draw do
   	match "/amu/" => "amu#outstanding"
   	match "/patmeans/:start_date/:end_date/:set_code/" => "stats#patient_means"
   	match "/tats/:week_no" => "tats#tatsperformance"
+  	match "/tats/" => "tats#tatsperformance"
   	
      resources :out_standing_work_index do
       member do

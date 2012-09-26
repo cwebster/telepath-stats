@@ -14,6 +14,8 @@
         data.addColumn('string', 'Set Code');
         data.addColumn('number', 'Average Turnaround Time for Week');
 		data.addColumn('number', 'Turnaround Time Target');
+		data.addColumn('number', 'Difference');
+		data.addColumn('number', 'Number of Sets');
         data.addColumn('boolean', 'In TAT');
 		<% 	@countnotat = 0
 			@counthittat = 0 
@@ -22,16 +24,28 @@
 		%>
         data.addRows([
 			<% @week_tats.each do |statistic| %>
-				['<%= statistic.Set_Code %>',  {v: <% if statistic.BItoAuth.nil? %> 0,
-				<%else%> <%=statistic.BItoAuth %>, <% end %>
-				f: <% if statistic.BItoAuth.nil? %> 'No Target'} <%else%>
-				'<%=statistic.BItoAuth %> Mins'}<% end %> , 
+				['<%= statistic.Set_Code %>',  {v: <% if statistic.ReqtoAuth.nil? %> 0,
+				<%else%> <%=statistic.ReqtoAuth %>, <% end %>
+				f: <% if statistic.ReqtoAuth.nil? %> 'No Target'} <%else%>
+				'<%=statistic.ReqtoAuth %> Hours'}<% end %> , 
 				
 				{v: <% if statistic.Turnaround_Time.nil? %> 0,
 				<%else%> <%=statistic.Turnaround_Time %>, <% end %>
 				f: <% if statistic.Turnaround_Time.nil? %> 'No Target'} <%else%>
-				'<%=statistic.Turnaround_Time %> Mins'}<% end %>,
-				<% if statistic.Turnaround_Time.to_f > statistic.BItoAuth.to_f %>
+				'<%=statistic.Turnaround_Time %> Hours'}<% end %>,
+				
+				{v: <% if statistic.Turnaround_Time.nil? %> 0,
+				<%else%> <%=(statistic.ReqtoAuth.to_f - statistic.Turnaround_Time.to_f) %>, <% end %>
+				f: <% if statistic.Turnaround_Time.nil? %> 'No Data'} <%else%>
+				'<%=(statistic.ReqtoAuth.to_f - statistic.Turnaround_Time.to_f) %> Hours'}<% end %>,
+				
+				{v: <% if statistic.Countofsets.nil? %> 0,
+				<%else%> <%=statistic.Countofsets %>, <% end %>
+				f: <% if statistic.Countofsets.nil? %> 'No Samples'} <%else%>
+				'<%=statistic.Countofsets %> Counts'}<% end %>,
+				
+				
+				<% if statistic.Turnaround_Time.to_f > statistic.ReqtoAuth.to_f %>
 					true 
 					<% @counthittat = @counthittat +1 
 					@rowpos[@counter] = @counter
@@ -43,7 +57,7 @@
 				<% end %>],
 				<% @counter = @counter +1 %>
 			<%end%>
-          		['Bob',   {v: 7000,  f: '$7,000'},{v: 7000,  f: '$7,000'}, true]
+          		['End of Data Marker',   {v: 0,  f: ''},{v: 0,  f: '0'},{v: 0,  f: '0'}, {v: 0,  f: '0'}, true]
         ]);
 			<% @counter=0%>
 			<% @rowpos.each do |rowhit| %>

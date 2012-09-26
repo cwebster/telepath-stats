@@ -1,17 +1,17 @@
 # Set the log level to ALL.
 log :level => :all
 
-rack "/Volumes/RAID/Sites/Default/telepath/config.ru" do
+rack "/Volumes/Macintosh HD2/telepath-statistics/config.ru" do
   # Set the host and / or port that this rack application will
   # be available on. This defaults to "0.0.0.0:9090"
   listen 3000
 
   # Set the host names that this rack application wll be available
   # on. This defaults to "*"
-  hosts "labmed"
+  hosts "labmed-mini"
 
   # Set arbitrary ENV variables
-  env :RAILS_ENV => "development"
+  env :RAILS_ENV => "production"
 
   # Set the file that controls the redeploys. This is relative to
   # the applications root (the directory that the rackup file lives

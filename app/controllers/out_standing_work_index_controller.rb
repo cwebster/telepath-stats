@@ -152,7 +152,7 @@ end
 
 def tatbyday
 
-if (Cache.get 'tatbyday:'+ params[:set_code].upcase).nil?
+if (Cache.get 'tatbyday:'+ params[:set_code] + params[:month]).nil?
 	@statistics = OutstandingWorkIndex.find_by_sql ["SELECT 
 	dai.Date_Authorised
   , rs.Date_Booked_In
@@ -176,10 +176,10 @@ group by
 	:month => params[:month].to_i, 
 	:year => params[:year].to_i}]
 
-  Cache.put 'tatbyday:'+ params[:set_code].upcase, @statistics
+  Cache.put 'tatbyday:'+ params[:set_code] + params[:month] , @statistics
 
 else
-	  @statistics = Cache.get 'tatbyday:'+ params[:set_code].upcase
+	  @statistics = Cache.get 'tatbyday:'+ params[:set_code] + params[:month]
 end
 
 	

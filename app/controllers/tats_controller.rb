@@ -11,13 +11,14 @@ class TatsController < ApplicationController
               iLabTP.Date_Authorised_Index.namespace,
               iLabTP.Result_Set.Set_Code,
               iLabTP.Ref_Set.Set_Exp,
+              iLabTP.Ref_Set.Turnaround_Time,
               count(iLabTP.Result_Set.Set_Code) Countofsets,
-              $piece(avg({fn TIMESTAMPDIFF(SQL_TSI_MINUTE,Result_Set.Date_Time_Booked_In,Result_Set.Date_Time_Authorised)}),'.')as BItoAuth,
-              $piece(avg({fn TIMESTAMPDIFF(SQL_TSI_MINUTE,iLabTP.Request.Date_Time_Received,Result_Set.Date_Time_Authorised)}),'.')as ReqtoAuth,
-              MAX({fn TIMESTAMPDIFF(SQL_TSI_MINUTE,Result_Set.Date_Time_Booked_In,Result_Set.Date_Time_Authorised)})as MaximumBItoAuth,
-              MIN({fn TIMESTAMPDIFF(SQL_TSI_MINUTE,Result_Set.Date_Time_Booked_In,Result_Set.Date_Time_Authorised)})as MinimumBItoAuth,
-              MAX({fn TIMESTAMPDIFF(SQL_TSI_MINUTE,iLabTP.Request.Date_Time_Received,Result_Set.Date_Time_Authorised)})as MaximumReqtoAuth,
-              MIN({fn TIMESTAMPDIFF(SQL_TSI_MINUTE,iLabTP.Request.Date_Time_Received,Result_Set.Date_Time_Authorised)})as MinimumReqtoAuth
+              $piece(avg({fn TIMESTAMPDIFF(SQL_TSI_HOUR,Result_Set.Date_Time_Booked_In,Result_Set.Date_Time_Authorised)}),'.')as BItoAuth,
+              $piece(avg({fn TIMESTAMPDIFF(SQL_TSI_HOUR,iLabTP.Request.Date_Time_Received,Result_Set.Date_Time_Authorised)}),'.')as ReqtoAuth,
+              MAX({fn TIMESTAMPDIFF(SQL_TSI_HOUR,Result_Set.Date_Time_Booked_In,Result_Set.Date_Time_Authorised)})as MaximumBItoAuth,
+              MIN({fn TIMESTAMPDIFF(SQL_TSI_HOUR,Result_Set.Date_Time_Booked_In,Result_Set.Date_Time_Authorised)})as MinimumBItoAuth,
+              MAX({fn TIMESTAMPDIFF(SQL_TSI_HOUR,iLabTP.Request.Date_Time_Received,Result_Set.Date_Time_Authorised)})as MaximumReqtoAuth,
+              MIN({fn TIMESTAMPDIFF(SQL_TSI_HOUR,iLabTP.Request.Date_Time_Received,Result_Set.Date_Time_Authorised)})as MinimumReqtoAuth
       from    iLabTP.Date_Authorised_Index,
       		iLabTP.Request,iLabTP.Result_Set,
               iLabTP.Ref_Set
@@ -33,7 +34,7 @@ class TatsController < ApplicationController
       ON (A.Set_Code = R.Set_Code)
       WHERE Countofsets>20
       ORDER BY A.Set_Code ASC", params[:week_no]]
-  
+      
   		Cache.put 'tats:'+ params[:week_no], @week_tats
 	else
     	@week_tats = Cache.get 'tats:' + params[:week_no]
