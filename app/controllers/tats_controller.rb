@@ -7,7 +7,7 @@ class TatsController < ApplicationController
 			SELECT DISTINCT R.Set_Code, R.Turnaround_Time, A.BItoAuth, A.ReqtoAuth, A.Date_Authorised, A.Countofsets, {fn WEEK(A.Date_Authorised)} as weekno
       FROM
       Ref_Set R JOIN
-      (select  iLabTP.Date_Authorised_Index.Date_Authorised,
+      (select iLabTP.Date_Authorised_Index.Date_Authorised,
               iLabTP.Date_Authorised_Index.namespace,
               iLabTP.Result_Set.Set_Code,
               iLabTP.Ref_Set.Set_Exp,
