@@ -45,6 +45,9 @@ end
  	@mean = mean(numb)
     @mean = (@mean*100).round/100.0 
     @outstanding = numbers
+  
+  StatHat::API.ez_post_value("Median Wait: ", "craig.webster@heartofengland.nhs.uk", @median.to_i)
+  StatHat::API.ez_post_value("Total Number Sets Outstanding: ", "craig.webster@heartofengland.nhs.uk", @outstanding)
 
 	respond_to do |format|
     	format.html # statistics.html.erb
@@ -87,6 +90,12 @@ def statistic
     @mean = (@mean*100).round/100.0 
     @pcttat = (@median/336)*100
     @pcttat = (@pcttat*100).round/100.0 
+    
+    puts "here i am"
+    StatHat::API.ez_post_value("Median TAT: " +params[:set_code].upcase, "craig.webster@heartofengland.nhs.uk", @median.to_i)
+    
+    StatHat::API.ez_post_value("Number Outstanding: " +params[:set_code].upcase, "craig.webster@heartofengland.nhs.uk", @outstanding.to_i)
+    
   end
      @setcode= params[:set_code].upcase
   	
